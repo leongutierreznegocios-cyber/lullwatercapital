@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lullwater Capital — Angel Investment Group</title>
+  <meta name="description" content="Lullwater Capital is a European angel investment group backing ambitious founders in Madrid, Paris, and London. Seed & Series A. $10k–$75k tickets." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:       #F2EFE9;
+      --cream-dark:  #E8E3DB;
+      --cream-mid:   #DDD8CF;
+      --black:       #111111;
+      --dark:        #222222;
+      --mid:         #666666;
+      --light:       #999999;
+      --white:       #FFFFFF;
+      --display:     'Playfair Display', serif;
+      --body:        'Cormorant Garamond', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--cream-mid);
+      padding: 18px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,0.06); }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: var(--body);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle grain texture */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-stars {
+      font-size: 1rem;
+      letter-spacing: 0.5em;
+      color: #555;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      color: var(--white);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.4s forwards;
+    }
+
+    .hero-subtitle {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      color: #AAAAAA;
+      letter-spacing: 0.2em;
+      margin-top: 16px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.6s forwards;
+    }
+
+    .hero-rule {
+      width: 80px;
+      height: 1px;
+      background: #444;
+      margin: 48px auto;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.8s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: #888;
+      letter-spacing: 0.02em;
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1s forwards;
+    }
+
+    .hero-cities {
+      margin-top: 48px;
+      font-family: var(--body);
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      color: #555;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 56px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.4s forwards;
+    }
+
+    .btn-primary {
+      background: var(--cream);
+      color: var(--black);
+      font-family: var(--body);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      padding: 14px 36px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: #888;
+      font-family: var(--body);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      padding: 14px 36px;
+      border: 1px solid #333;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: #666; color: #bbb; transform: translateY(-2px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ─────────────────────────────────────────── */
+    section { padding: 100px 60px; max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-family: var(--body);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-heading {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--black);
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .section-body {
+      font-family: var(--body);
+      font-size: 1.1rem;
+      color: var(--mid);
+      max-width: 640px;
+      line-height: 1.8;
+    }
+
+    /* ── ABOUT ────────────────────────────────────────────── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      padding: 120px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-right {
+      border-left: 1px solid var(--cream-mid);
+      padding-left: 60px;
+    }
+
+    .about-quote {
+      font-family: var(--display);
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      color: var(--black);
+      line-height: 1.4;
+      margin-bottom: 32px;
+    }
+
+    /* ── THESIS ───────────────────────────────────────────── */
+    #thesis {
+      background: var(--black);
+      max-width: 100%;
+      padding: 100px 0;
+    }
+
+    .thesis-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+
+    .thesis-inner .section-heading { color: var(--white); }
+    .thesis-inner .section-label { color: #555; }
+
+    .thesis-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #222;
+      margin-top: 60px;
+      border: 1px solid #222;
+    }
+
+    .thesis-card {
+      background: var(--black);
+      padding: 40px 32px;
+      transition: background 0.2s;
+    }
+    .thesis-card:hover { background: #1a1a1a; }
+
+    .thesis-card-label {
+      font-family: var(--body);
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: #444;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .thesis-card-value {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .thesis-card-sub {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    /* ── WHAT WE LOOK FOR ─────────────────────────────────── */
+    #criteria { padding: 120px 60px; max-width: 1100px; margin: 0 auto; }
+
+    .criteria-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 60px;
+    }
+
+    .criteria-col-header {
+      font-family: var(--body);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      color: var(--light);
+      text-transform: uppercase;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--cream-mid);
+      margin-bottom: 24px;
+    }
+
+    .criteria-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--cream-mid);
+    }
+
+    .criteria-dash {
+      font-family: var(--display);
+      color: var(--black);
+      font-size: 1rem;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+
+    .criteria-text {
+      font-family: var(--body);
+      font-size: 1rem;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    /* ── TEAM ─────────────────────────────────────────────── */
+    #team {
+      background: var(--cream-dark);
+      max-width: 100%;
+      padding: 100px 0;
+    }
+
+    .team-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .team-card {
+      background: var(--cream);
+      border: 1px solid var(--cream-mid);
+      padding: 48px 40px;
+    }
+
+    .team-card-black {
+      background: var(--black);
+      border: 1px solid #222;
+      padding: 48px 40px;
+    }
+
+    .team-name {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.6rem;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .team-name-white { color: var(--white); }
+
+    .team-role {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--mid);
+      margin-bottom: 24px;
+    }
+
+    .team-role-light { color: #666; }
+
+    .team-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--cream-mid);
+      margin-bottom: 24px;
+    }
+
+    .team-rule-dark { background: #333; }
+
+    .team-bio {
+      font-family: var(--body);
+      font-size: 1rem;
+      color: var(--mid);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .team-bio-light { color: #888; }
+
+    .team-link {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--light);
+      text-decoration: none;
+      border-bottom: 1px solid var(--cream-mid);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .team-link:hover { color: var(--black); border-color: var(--black); }
+
+    .team-link-light {
+      color: #555;
+      border-color: #333;
+    }
+    .team-link-light:hover { color: var(--cream); border-color: var(--cream); }
+
+    /* ── PROCESS ──────────────────────────────────────────── */
+    #process { padding: 120px 60px; max-width: 1100px; margin: 0 auto; }
+
+    .process-steps {
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 32px;
+      align-items: flex-start;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--cream-mid);
+      transition: background 0.2s;
+    }
+
+    .process-step:first-child { border-top: 1px solid var(--cream-mid); }
+
+    .step-num {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: var(--cream-mid);
+      line-height: 1.2;
+      padding-top: 4px;
+    }
+
+    .step-content {}
+
+    .step-title {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* ── APPLY ────────────────────────────────────────────── */
+    #apply {
+      background: var(--black);
+      max-width: 100%;
+      padding: 100px 0;
+    }
+
+    .apply-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .apply-card {
+      border: 1px solid #222;
+      padding: 48px 40px;
+    }
+
+    .apply-card-title {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .apply-card-body {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .apply-email {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--cream);
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .apply-email:hover { color: var(--white); border-color: #666; }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid #1a1a1a;
+      padding: 48px 60px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.15em;
+      color: #444;
+      margin-bottom: 12px;
+    }
+
+    .footer-cities {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .footer-legal {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: #2a2a2a;
+    }
+
+    /* ── STARS DIVIDER ────────────────────────────────────── */
+    .stars-divider {
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.5em;
+      color: var(--cream-mid);
+      padding: 60px 0 0;
+    }
+
+    .stars-divider-dark {
+      color: #2a2a2a;
+      padding: 0 0 60px;
+    }
+
+    /* ── SCROLL REVEAL ────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      section, #about, #criteria, #process { padding: 80px 24px; }
+      #about { grid-template-columns: 1fr; gap: 40px; }
+      .about-right { border-left: none; padding-left: 0; border-top: 1px solid var(--cream-mid); padding-top: 40px; }
+      .thesis-grid { grid-template-columns: repeat(2, 1fr); }
+      .criteria-cols { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .apply-inner { grid-template-columns: 1fr; gap: 32px; }
+      .thesis-inner, .team-inner, .apply-inner { padding: 0 24px; }
+      footer { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">LULLWATER CAPITAL</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#thesis">Thesis</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#apply">Apply</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-stars">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</div>
+    <h1 class="hero-title">LULLWATER</h1>
+    <div class="hero-subtitle">C A P I T A L</div>
+    <div class="hero-rule"></div>
+    <p class="hero-tagline">Ambitious investors helping founders build what matters.</p>
+    <div class="hero-cities">MADRID &nbsp;·&nbsp; PARIS &nbsp;·&nbsp; LONDON</div>
+    <div class="hero-cta">
+      <a href="#apply" class="btn-primary">APPLY FOR FUNDING</a>
+      <a href="#thesis" class="btn-secondary">OUR THESIS</a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="about">
+    <div class="about-left reveal">
+      <div class="section-label">Who We Are</div>
+      <h2 class="section-heading">We are not passive capital.</h2>
+      <p class="section-body">Lullwater Capital is a European angel investment group backing ambitious founders building scalable businesses with real traction. We invest $10,000–$75,000 in Seed and Series A companies across Madrid, Paris, and London.</p>
+    </div>
+    <div class="about-right reveal">
+      <p class="about-quote">"Beyond capital, we offer hands-on mentorship, strategic support, and access to our network across Europe. We move fast, think clearly, and back founders who are building something real."</p>
+      <p class="section-body" style="font-size:0.95rem;">Founded by Lukas Van de Vrede and Leon Gutierrez — IE University alumni united by ambition and a shared belief that the best investments are built on genuine partnership.</p>
+    </div>
+  </div>
+
+  <!-- THESIS -->
+  <div id="thesis">
+    <div class="stars-divider-dark">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="thesis-inner">
+      <div class="section-label reveal" style="color:#555;">Investment Thesis</div>
+      <h2 class="section-heading reveal">What we back.</h2>
+      <div class="thesis-grid reveal">
+        <div class="thesis-card">
+          <div class="thesis-card-label">Stage</div>
+          <div class="thesis-card-value">Seed & Series A</div>
+          <div class="thesis-card-sub">Revenue required</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Ticket Size</div>
+          <div class="thesis-card-value">$10k – $75k</div>
+          <div class="thesis-card-sub">USD per deal</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Markets</div>
+          <div class="thesis-card-value">Madrid · Paris · London</div>
+          <div class="thesis-card-sub">Europe focused</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Sectors</div>
+          <div class="thesis-card-value">Sector Agnostic</div>
+          <div class="thesis-card-sub">Strong teams & models</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Instruments</div>
+          <div class="thesis-card-value">SAFE · Equity</div>
+          <div class="thesis-card-sub">Preferred Stock for A+</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Valuation</div>
+          <div class="thesis-card-value">Case by Case</div>
+          <div class="thesis-card-sub">Based on fundamentals</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Deal Flow</div>
+          <div class="thesis-card-value">No Limit</div>
+          <div class="thesis-card-sub">Every good deal considered</div>
+        </div>
+        <div class="thesis-card">
+          <div class="thesis-card-label">Value Add</div>
+          <div class="thesis-card-value">Capital + More</div>
+          <div class="thesis-card-sub">Mentorship, network, strategy</div>
+        </div>
+      </div>
+    </div>
+    <div class="stars-divider" style="color:#1a1a1a; padding: 60px 0 0;">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</div>
+  </div>
+
+  <!-- CRITERIA -->
+  <div id="criteria">
+    <div class="section-label reveal">Selection Criteria</div>
+    <h2 class="section-heading reveal">What we look for.</h2>
+    <div class="criteria-cols reveal">
+      <div>
+        <div class="criteria-col-header">We invest in</div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Founders with conviction, domain expertise, and a clear vision</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Proven revenue traction — the business model works</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Scalable unit economics with a path to strong margins</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Large addressable market — we back ambitious ideas</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Capital efficiency — teams that do more with less</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Openness to mentorship and strategic collaboration</span></div>
+      </div>
+      <div>
+        <div class="criteria-col-header">We don't invest in</div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Pre-revenue or pure idea-stage companies</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Businesses without a clear path to scalability</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Founders unwilling to take feedback or iterate</span></div>
+        <div class="criteria-item"><span class="criteria-dash">—</span><span class="criteria-text">Sectors with structural regulatory barriers to growth</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div id="team">
+    <div class="team-inner">
+      <div class="stars-divider" style="padding: 0 0 60px;">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</div>
+      <div class="section-label reveal">The Team</div>
+      <h2 class="section-heading reveal">The people behind Lullwater.</h2>
+      <div class="team-grid reveal">
+        <div class="team-card-black">
+          <div class="team-name team-name-white">Lukas Van de Vrede</div>
+          <div class="team-role team-role-light">Co-Founder & Lead Investor</div>
+          <div class="team-rule team-rule-dark"></div>
+          <p class="team-bio team-bio-light">Leads the angel investor group and coordinates capital deployment. Brings strong business judgment and an extensive network across Europe to every deal. Currently studying at IE University in Madrid.</p>
+          <a href="https://linkedin.com/in/lukas-van-de-vrede" target="_blank" class="team-link team-link-light">LinkedIn →</a>
+        </div>
+        <div class="team-card">
+          <div class="team-name">Leon Gutierrez</div>
+          <div class="team-role">Co-Founder, Deal Lead & Analyst</div>
+          <div class="team-rule"></div>
+          <p class="team-bio">Responsible for all deal sourcing, financial analysis, startup valuation, and due diligence. Leon filters every pitch and builds the investment thesis for each opportunity. Originally from Mexico, studying at IE University in Madrid.</p>
+          <a href="https://linkedin.com/in/leon-gutierrez" target="_blank" class="team-link">LinkedIn →</a>
+        </div>
+      </div>
+      <div class="stars-divider" style="padding: 60px 0 0;">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div id="process">
+    <div class="section-label reveal">How It Works</div>
+    <h2 class="section-heading reveal">Our process.</h2>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Application</div>
+          <div class="step-desc">Submit your pitch deck and a brief summary of your traction and financials. We respond to every application within 5 business days.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">First-Round Screening</div>
+          <div class="step-desc">Shortlisted companies present to our Deal Lead in a focused 30-minute session. We evaluate your financial model, unit economics, and growth strategy.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">Due Diligence</div>
+          <div class="step-desc">We conduct financial due diligence, market analysis, competitive landscape review, and founder background checks. Honest and thorough.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <div class="step-title">Investor Presentation</div>
+          <div class="step-desc">Companies passing due diligence present to the full Lullwater Capital investor group. Each angel receives a detailed Deal Memo prepared by our Deal Lead.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <div class="step-title">Decision & Close</div>
+          <div class="step-desc">Angels decide independently. Term sheet and documentation prepared. Target close within 2–4 weeks of investor approval. We move fast.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">06</div>
+        <div class="step-content">
+          <div class="step-title">Post-Investment Partnership</div>
+          <div class="step-desc">Monthly check-ins, strategic support, and network introductions begin immediately. We are active partners, not passive observers.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLY -->
+  <div id="apply">
+    <div class="stars-divider-dark">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div class="apply-inner">
+      <div class="apply-card reveal">
+        <div class="apply-card-title">For Founders</div>
+        <p class="apply-card-body">Building something real with traction? We want to hear from you. Send us your pitch deck and a brief summary of your metrics. We respond to every application within 5 business days.</p>
+        <a href="mailto:founders@lullwatercapital.com" class="apply-email">founders@lullwatercapital.com</a>
+      </div>
+      <div class="apply-card reveal">
+        <div class="apply-card-title">For Investors</div>
+        <p class="apply-card-body">Interested in accessing curated deal flow without the burden of sourcing? We are selectively expanding our angel network. Let's connect.</p>
+        <a href="mailto:investors@lullwatercapital.com" class="apply-email">investors@lullwatercapital.com</a>
+      </div>
+    </div>
+    <div style="text-align:center; padding: 60px 0 0;">
+      <div style="font-family:'Playfair Display',serif; font-weight:700; font-size:1.6rem; letter-spacing:0.15em; color:#333; margin-bottom:12px;">LULLWATER CAPITAL</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; letter-spacing:0.2em; color:#333;">MADRID &nbsp;·&nbsp; PARIS &nbsp;·&nbsp; LONDON</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">LULLWATER CAPITAL</div>
+    <div class="footer-cities">MADRID &nbsp;·&nbsp; PARIS &nbsp;·&nbsp; LONDON</div>
+    <div class="footer-legal">© 2026 Lullwater Capital. All rights reserved. &nbsp;·&nbsp; hello@lullwatercapital.com</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+</body>
+</html>
